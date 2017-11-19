@@ -25,7 +25,7 @@ class Application
 	vector3 position = vector3();
 	quaternion currentOrientation = quaternion(AXIS_X);
 	matrix4 model = IDENTITY_M4;
-	float dampeningRate = 0.99f;
+	float dampeningRate = 0.996f;
 
 private:
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer

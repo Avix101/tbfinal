@@ -34,7 +34,7 @@ void Application::InitVariables(void)
 	{
 		pins[i] = Mesh();
 		pins[i].GenerateCylinder(0.3f, 1.5f, 8, C_RED);
-		pinLocations[i] = vector3((-1.0f * row) + (2.0f * currentPin), 0.0f, -10.0f + (-1.0f * row));
+		pinLocations[i] = vector3((-1.0f * row) + (2.0f * currentPin), 0.25f, -10.0f + (-1.0f * row));
 
 		currentPin++;
 
@@ -106,7 +106,7 @@ void Application::Display(void)
 	//Render the bowling ball, ball wireframe and the plane
 	bowlingBall->Render(projection, view, model);
 	bowlingBallWire->Render(projection, view, model);
-	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)));
+	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.25f,1.0f,1.0f)));
 
 	//Draw pins
 	for (uint i = 0; i < 10; i++)
