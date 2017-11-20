@@ -9,11 +9,11 @@ void Application::InitVariables(void)
 	//m_pWindow->setPosition(sf::Vector2i(710, 0));
 
 	//Set the position and target of the camera
-	m_pCameraMngr->SetPositionTargetAndUp(	vector3(0.0f, 3.0f, 13.0f), //Position
-											vector3(0.0f, 3.0f, 12.0f),	//Target
-											AXIS_Y );					//Up
+	m_pCameraMngr->SetPositionTargetAndUp(vector3(0.0f, 3.0f, 13.0f), //Position
+		vector3(0.0f, 3.0f, 12.0f),	//Target
+		AXIS_Y);					//Up
 
-	//Set the position of the light
+									//Set the position of the light
 	m_pLightMngr->SetPosition(vector3(10.0f));
 
 	bowlingBall = new Mesh();
@@ -27,6 +27,7 @@ void Application::InitVariables(void)
 
 	pins = new Mesh[10];
 	pinLocations = new vector3[10];
+
 
 	uint row = 0;
 	uint currentPin = 0;
@@ -53,6 +54,33 @@ void Application::Update(void)
 	//Is the arcball active?
 	ArcBall();
 
+	//check for mouse press and get position to calculate force
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		pressed = true;
+		GetCursorPos(&pt);
+		startMouseX = pt.x;
+		startMouseY = pt.y;
+		force *= 0.8;
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
+	{
+		if (pressed == true)
+		{
+			GetCursorPos(&pt);
+			endMouseX = pt.x;
+			endMouseY = pt.y;
+
+			pushforce = vector3(endMouseX - startMouseX, 0.0f, endMouseY - startMouseY);
+
+			force -= pushforce / 2.0f;
+
+			pressed = false;
+		}
+
+	}
+
+
 	//Is the first person camera active?
 	CameraRotation();
 }
@@ -70,14 +98,14 @@ void Application::Display(void)
 	{
 		//Find the magnitude of the force (equivalent to the rotation in degrees)
 		float speed = glm::length(force);
-		
+
 		//Get the sphere's forward vector
 		vector3 forward = glm::normalize(force);
-		
+
 		//Normalized forward vector * (degrees of rotation / 360 total degrees) * (Circumfrence of the sphere, 2PIr (radius is 1.0f))
 		//Keep in case we need: position -= (force / ((2.0f * (float) PI) / ((speed * (float)PI) / 180.0f) / 2.0f));
 		position -= forward * (speed / 360.0f) * (2.0f * (float)PI);
-		
+
 		//The ball's axis of rotation can be found by crossing the forward and up vectors
 		vector3 rotationAxis = glm::cross(forward, AXIS_Y);
 
@@ -86,7 +114,7 @@ void Application::Display(void)
 
 		//Multiply the current orientation by the new rotation caused by the force
 		currentOrientation = forceRotation * currentOrientation;
-		
+
 		//Translate the model, and then rotate it to the current orientation
 		model = glm::translate(IDENTITY_M4, position);
 		model = model * ToMatrix4(currentOrientation);
@@ -106,7 +134,7 @@ void Application::Display(void)
 	//Render the bowling ball, ball wireframe and the plane
 	bowlingBall->Render(projection, view, model);
 	bowlingBallWire->Render(projection, view, model);
-	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.25f,1.0f,1.0f)));
+	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.25f, 1.0f, 1.0f)));
 
 	//Draw pins
 	for (uint i = 0; i < 10; i++)
@@ -120,16 +148,16 @@ void Application::Display(void)
 
 	//Add skybox
 	m_pMeshMngr->AddSkyboxToRenderList();
-	
+
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
 
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();
-		
+
 	//draw gui
 	DrawGUI();
-	
+
 	//end the current frame (internally swaps the front and back buffers)
 	m_pWindow->display();
 }
