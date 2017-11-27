@@ -16,11 +16,17 @@ void Application::InitVariables(void)
 									//Set the position of the light
 	m_pLightMngr->SetPosition(vector3(10.0f));
 
+	//Entity Manager
+	m_pEntityMngr = MyEntityManager::GetInstance();
+
+	//m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Bowling");
+	//m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
+
 	bowlingBall = new Mesh();
-	bowlingBall->GenerateSphere(1.0f, 4, C_BLACK);
+	bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
 
 	bowlingBallWire = new Mesh();
-	bowlingBallWire->GenerateWireSphere(0.5f, C_GREEN);
+	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
 
 	plane = new Mesh();
 	plane->GeneratePlane(30.0f, C_GRAY);
@@ -35,7 +41,7 @@ void Application::InitVariables(void)
 	{
 		pins[i] = Mesh();
 		pins[i].GenerateCylinder(0.3f, 1.5f, 8, C_RED);
-		pinLocations[i] = vector3((-1.0f * row) + (2.0f * currentPin), 0.25f, -10.0f + (-1.0f * row));
+		pinLocations[i] = vector3((-1.5f * row) + (3.0f * currentPin), -0.5f/*0.25f*/, -10.0f + (-1.5f * row));
 
 		currentPin++;
 
@@ -45,6 +51,37 @@ void Application::InitVariables(void)
 			currentPin = 0;
 		}
 	}
+
+	//Add pins to the entity manager
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin1");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin1"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin2");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin2"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin3");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin3"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin4");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin4"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin5");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin5"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin6");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin6"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin7");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin7"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin8");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin8"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin9");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin9"); //set visibility of the entity's axis
+
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin10");
+	m_pEntityMngr->SetAxisVisibility(true, "Pin10"); //set visibility of the entity's axis
 }
 void Application::Update(void)
 {
@@ -83,6 +120,12 @@ void Application::Update(void)
 
 	//Is the first person camera active?
 	CameraRotation();
+
+	//Update Entity Manager
+	m_pEntityMngr->Update();
+
+	//Add objects to render list
+	m_pEntityMngr->AddEntityToRenderList(-1, true);
 }
 void Application::Display(void)
 {
@@ -134,14 +177,47 @@ void Application::Display(void)
 	//Render the bowling ball, ball wireframe and the plane
 	bowlingBall->Render(projection, view, model);
 	bowlingBallWire->Render(projection, view, model);
-	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.25f, 1.0f, 1.0f)));
+	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
+
+	//m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
 	//Draw pins
-	for (uint i = 0; i < 10; i++)
-	{
-		matrix4 pinModel = glm::translate(IDENTITY_M4, pinLocations[i]);
-		pins[i].Render(projection, view, pinModel);
-	}
+	//for (uint i = 0; i < 10; i++)
+	//{
+	//	matrix4 pinModel = glm::translate(IDENTITY_M4, pinLocations[i]) * glm::scale(vector3(0.75f,0.75f,0.75f));
+	//	pins[i].Render(projection, view, pinModel);
+	//}
+
+	//Render the pins
+	matrix4 pinModel1 = glm::translate(IDENTITY_M4, pinLocations[0]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel1, "Pin1");
+
+	matrix4 pinModel2 = glm::translate(IDENTITY_M4, pinLocations[1]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel2, "Pin2");
+
+	matrix4 pinModel3 = glm::translate(IDENTITY_M4, pinLocations[2]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel3, "Pin3");
+
+	matrix4 pinModel4 = glm::translate(IDENTITY_M4, pinLocations[3]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel4, "Pin4");
+
+	matrix4 pinModel5 = glm::translate(IDENTITY_M4, pinLocations[4]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel5, "Pin5");
+
+	matrix4 pinModel6 = glm::translate(IDENTITY_M4, pinLocations[5]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel6, "Pin6");
+
+	matrix4 pinModel7 = glm::translate(IDENTITY_M4, pinLocations[6]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel7, "Pin7");
+
+	matrix4 pinModel8 = glm::translate(IDENTITY_M4, pinLocations[7]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel8, "Pin8");
+
+	matrix4 pinModel9 = glm::translate(IDENTITY_M4, pinLocations[8]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel9, "Pin9");
+
+	matrix4 pinModel10 = glm::translate(IDENTITY_M4, pinLocations[9]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel10, "Pin10");
 
 	//Add grid to the scene
 	//m_pMeshMngr->AddGridToRenderList();
@@ -169,6 +245,9 @@ void Application::Release(void)
 	SafeDelete(plane);
 	delete[] pins;
 	delete[] pinLocations;
+
+	//release the entity manager
+	m_pEntityMngr->ReleaseInstance();
 
 	//release GUI
 	ShutdownGUI();
