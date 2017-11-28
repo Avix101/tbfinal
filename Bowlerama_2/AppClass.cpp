@@ -223,7 +223,7 @@ void Application::Display(void)
 	//m_pMeshMngr->AddGridToRenderList();
 
 	//Add skybox
-	m_pMeshMngr->AddSkyboxToRenderList();
+	m_pMeshMngr->AddSkyboxToRenderList("Skybox.png");
 
 	//render list call
 	m_uRenderCallCount = m_pMeshMngr->Render();
