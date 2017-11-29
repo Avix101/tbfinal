@@ -19,11 +19,11 @@ void Application::InitVariables(void)
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
-	//m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Bowling");
-	//m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingBall.obj", "Bowling");
+	m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
 
-	bowlingBall = new Mesh();
-	bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
+	//bowlingBall = new Mesh();
+	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
 
 	bowlingBallWire = new Mesh();
 	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
@@ -241,11 +241,11 @@ void Application::Display(void)
 	force *= dampeningRate;
 
 	//Render the bowling ball, ball wireframe and the plane
-	bowlingBall->Render(projection, view, model);
+	//bowlingBall->Render(projection, view, model);
 	bowlingBallWire->Render(projection, view, model);
 	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
-	//m_pEntityMngr->SetModelMatrix(model, "Bowling");
+	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
 	//Draw pins
 	//for (uint i = 0; i < 10; i++)
