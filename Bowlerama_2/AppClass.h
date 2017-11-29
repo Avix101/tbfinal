@@ -36,6 +36,25 @@ namespace Simplex
 		POINT pt;
 		bool pressed = false;
 
+		//Music & Sounds
+		uint globalMusicVolume = 60;
+		uint globalSoundVolume = 75;
+
+		/*Music track: "Chill Wave" Kevin MacLeod (incompetech.com)
+		Licensed under Creative Commons: By Attribution 3.0 License
+		http://creativecommons.org/licenses/by/3.0/
+		*/
+		/*Music track: "Funkorama" Kevin MacLeod (incompetech.com)
+		Licensed under Creative Commons: By Attribution 3.0 License
+		http://creativecommons.org/licenses/by/3.0/
+		*/
+		//sf::Music bgMusic;
+		std::vector<sf::Music*> music;
+
+		//All sounds (ball rolling, ambience, and hitting pins) came from: http://www.freesfx.co.uk/
+		std::vector<sf::Sound*> sounds;
+		std::vector<sf::SoundBuffer*> soundBuffers;
+
 	private:
 		String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
 

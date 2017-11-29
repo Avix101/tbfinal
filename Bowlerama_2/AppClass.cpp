@@ -82,6 +82,54 @@ void Application::InitVariables(void)
 
 	m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin10");
 	m_pEntityMngr->SetAxisVisibility(true, "Pin10"); //set visibility of the entity's axis
+
+	//Load audio
+	/*sf::Music* bgMusic = new sf::Music();
+	if (!bgMusic->openFromFile("Data/Audio/BowleramaSounds/ChillWave.ogg"))
+	{
+		//Song failed to load
+		std::cout << "BG Audio Failed to load!";
+	}
+	else
+	{
+		std::cout << "BG Audio loaded!";
+		music.push_back(bgMusic);
+	}
+
+	sf::Music* ambience = new sf::Music();
+	if (!ambience->openFromFile("Data/Audio/BowleramaSounds/AlleyAmbience.ogg"))
+	{
+		std::cout << "Ambience Audio Failed to load!";
+	}
+	else
+	{
+		std::cout << "Ambience Audio loaded!";
+		music.push_back(ambience);
+	}
+
+	sf::Sound* rollingBall = new sf::Sound();
+	sf::SoundBuffer* rollingBallBuffer = new sf::SoundBuffer();
+	if (!rollingBallBuffer->loadFromFile("Data/Audio/BowleramaSounds/RollingBall.ogg"))
+	{
+		std::cout << "Rolling Ball Audio Failed to load!";
+	}
+	else
+	{
+		std::cout << "Rolling Ball Audio loaded!";
+		rollingBall->setBuffer(*rollingBallBuffer);
+		rollingBall->setLoop(true);
+		rollingBall->setVolume(globalSoundVolume);
+		soundBuffers.push_back(rollingBallBuffer);
+		sounds.push_back(rollingBall);
+	}
+
+	for (uint i = 0; i < music.size(); i++)
+	{
+		//music[i]->play();
+		//I don't know why, but we need to loop manually to avoid that stupid thread breaking behavior
+		music[i]->setLoop(true);
+		music[i]->setVolume(globalMusicVolume);
+	}*/
 }
 void Application::Update(void)
 {
@@ -168,7 +216,25 @@ void Application::Display(void)
 			force = vector3();
 		}
 
+		//std::cout << sounds[0]->getStatus() << std::endl;
+		//Play a ball rolling sound effect
+		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		{
+			sounds[0]->setPitch(1.0f + speed / 10.0f);
+		}
+		else
+		{
+			sounds[0]->play();
+		}*/
+
 		//std::cout << "X: " << position.x << "  Y: " << position.y << "  Z: " << position.z << std::endl;
+	}
+	else
+	{
+		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		{
+			sounds[0]->stop();
+		}*/
 	}
 
 	//Lessen the force over time due to friction
@@ -239,6 +305,20 @@ void Application::Display(void)
 }
 void Application::Release(void)
 {
+	//Delete all audio!
+	for (uint i = 0; i < music.size(); i++)
+	{
+		SafeDelete(music[i]);
+	}
+	music.clear();
+
+	for (uint i = 0; i < sounds.size(); i++)
+	{
+		SafeDelete(soundBuffers[i]);
+		SafeDelete(sounds[i]);
+	}
+	sounds.clear();
+
 	//Delete everything, and avoid memory leaks!
 	SafeDelete(bowlingBall);
 	SafeDelete(bowlingBallWire);

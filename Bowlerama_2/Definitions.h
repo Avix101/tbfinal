@@ -11,6 +11,7 @@ Date: 2017/06
 #include "SFML\Window.hpp"
 #include "SFML\Graphics.hpp"
 #include "SFML\OpenGL.hpp"
+#include "SFML\Audio.hpp"
 
 #endif //__DEFINITIONS_H_
 
