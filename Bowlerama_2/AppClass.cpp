@@ -19,11 +19,11 @@ void Application::InitVariables(void)
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
-	//m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Bowling");
-	//m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingBall.obj", "Bowling");
+	m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
 
-	bowlingBall = new Mesh();
-	bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
+	//bowlingBall = new Mesh();
+	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
 
 	bowlingBallWire = new Mesh();
 	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
@@ -71,7 +71,7 @@ void Application::InitVariables(void)
 
 
 	//Load audio
-	/*sf::Music* bgMusic = new sf::Music();
+	sf::Music* bgMusic = new sf::Music();
 	if (!bgMusic->openFromFile("Data/Audio/BowleramaSounds/ChillWave.ogg"))
 	{
 		//Song failed to load
@@ -112,11 +112,11 @@ void Application::InitVariables(void)
 
 	for (uint i = 0; i < music.size(); i++)
 	{
-		//music[i]->play();
+		music[i]->play();
 		//I don't know why, but we need to loop manually to avoid that stupid thread breaking behavior
 		music[i]->setLoop(true);
 		music[i]->setVolume(globalMusicVolume);
-	}*/
+	}
 }
 void Application::Update(void)
 {
@@ -205,34 +205,34 @@ void Application::Display(void)
 
 		//std::cout << sounds[0]->getStatus() << std::endl;
 		//Play a ball rolling sound effect
-		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
 		{
 			sounds[0]->setPitch(1.0f + speed / 10.0f);
 		}
 		else
 		{
 			sounds[0]->play();
-		}*/
+		}
 
 		//std::cout << "X: " << position.x << "  Y: " << position.y << "  Z: " << position.z << std::endl;
 	}
 	else
 	{
-		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
 		{
 			sounds[0]->stop();
-		}*/
+		}
 	}
 
 	//Lessen the force over time due to friction
 	force *= dampeningRate;
 
 	//Render the bowling ball, ball wireframe and the plane
-	bowlingBall->Render(projection, view, model);
+	//bowlingBall->Render(projection, view, model);
 	bowlingBallWire->Render(projection, view, model);
 	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
-	//m_pEntityMngr->SetModelMatrix(model, "Bowling");
+	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
 	//Draw pins
 	//for (uint i = 0; i < 10; i++)
