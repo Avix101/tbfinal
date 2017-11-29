@@ -84,7 +84,7 @@ void Application::InitVariables(void)
 	m_pEntityMngr->SetAxisVisibility(true, "Pin10"); //set visibility of the entity's axis
 
 	//Load audio
-	/*sf::Music* bgMusic = new sf::Music();
+	sf::Music* bgMusic = new sf::Music();
 	if (!bgMusic->openFromFile("Data/Audio/BowleramaSounds/ChillWave.ogg"))
 	{
 		//Song failed to load
@@ -125,11 +125,11 @@ void Application::InitVariables(void)
 
 	for (uint i = 0; i < music.size(); i++)
 	{
-		//music[i]->play();
+		music[i]->play();
 		//I don't know why, but we need to loop manually to avoid that stupid thread breaking behavior
 		music[i]->setLoop(true);
 		music[i]->setVolume(globalMusicVolume);
-	}*/
+	}
 }
 void Application::Update(void)
 {
@@ -218,23 +218,23 @@ void Application::Display(void)
 
 		//std::cout << sounds[0]->getStatus() << std::endl;
 		//Play a ball rolling sound effect
-		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
 		{
 			sounds[0]->setPitch(1.0f + speed / 10.0f);
 		}
 		else
 		{
 			sounds[0]->play();
-		}*/
+		}
 
 		//std::cout << "X: " << position.x << "  Y: " << position.y << "  Z: " << position.z << std::endl;
 	}
 	else
 	{
-		/*if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
+		if (sounds[0]->getStatus() == sf::Sound::Status::Playing)
 		{
 			sounds[0]->stop();
-		}*/
+		}
 	}
 
 	//Lessen the force over time due to friction
