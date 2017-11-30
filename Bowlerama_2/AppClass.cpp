@@ -263,7 +263,7 @@ void Application::Display(void)
 
 	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
-	bowlingBallWire->Render(projection, view, model);
+	bowlingBallWire->Render(projection, view, glm::scale(model, vector3(1.2f)));
 	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
 	//Render the pins
