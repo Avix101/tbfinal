@@ -25,7 +25,7 @@ namespace Simplex
 		Mesh* pins;
 		vector3* pinLocations;
 		vector3 force = vector3();
-		vector3 position = vector3(0.0f, 0.25f, 0.0f);
+		vector3 position = vector3(0.0f, 0.75f, 0.0f);
 		quaternion currentOrientation = quaternion(AXIS_X);
 		matrix4 model = IDENTITY_M4;
 		float dampeningRate = 0.996f;

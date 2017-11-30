@@ -19,14 +19,7 @@ void Application::InitVariables(void)
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
-	m_pEntityMngr->AddEntity("Bowlerama\\BowlingBall.obj", "Bowling");
-	m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
 
-	//bowlingBall = new Mesh();
-	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
-
-	bowlingBallWire = new Mesh();
-	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
 
 	plane = new Mesh();
 	plane->GeneratePlane(30.0f, C_GRAY);
@@ -43,8 +36,9 @@ void Application::InitVariables(void)
 		pins[i].GenerateCylinder(0.3f, 1.5f, 8, C_RED);
 		pinLocations[i] = vector3((-1.5f * row) + (3.0f * currentPin), -0.5f/*0.25f*/, -10.0f + (-1.5f * row));
 
-		m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin" + std::to_string(1+i));
-		m_pEntityMngr->SetAxisVisibility(true, "Pin" + std::to_string(i+1)); //set visibility of the entity's axis
+		m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin" + std::to_string(i));
+		m_pEntityMngr->SetAxisVisibility(true, "Pin" + std::to_string(i)); //set visibility of the entity's axis
+
 		
 
 		currentPin++;
@@ -55,19 +49,57 @@ void Application::InitVariables(void)
 			currentPin = 0;
 		}
 	}
-	/*
-	//Add pins to the entity manager
-	for (int i = 1; i < 11; i++)
-	{
-		m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin" + std::to_string(i));
-		m_pEntityMngr->SetAxisVisibility(true, "Pin" + std::to_string(i)); //set visibility of the entity's axis
-		vector3 v3Position = ;
-		v3Position.y = -0.5f;
-		matrix4 m4Position = glm::translate(v3Position)  * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-		m_pEntityMngr->SetModelMatrix(m4Position);
-		m_pEntityMngr->UsePhysicsSolver();
-	}
-	*/
+	m_pEntityMngr->AddEntity("Bowlerama\\BowlingBall.obj", "Bowling");
+	m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
+
+	//bowlingBall = new Mesh();
+	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
+
+	bowlingBallWire = new Mesh();
+	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
+	
+	m_pEntityMngr->UsePhysicsSolver(true, "Bowling");
+	m_pEntityMngr->SetMass(5.0f, "Bowling");
+
+	matrix4 pinModel1 = glm::translate(IDENTITY_M4, pinLocations[0]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel1, "Pin0");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin0");
+
+	matrix4 pinModel2 = glm::translate(IDENTITY_M4, pinLocations[1]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel2, "Pin1");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin1");
+
+	matrix4 pinModel3 = glm::translate(IDENTITY_M4, pinLocations[2]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel3, "Pin2");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin2");
+
+	matrix4 pinModel4 = glm::translate(IDENTITY_M4, pinLocations[3]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel4, "Pin3");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin3");
+
+	matrix4 pinModel5 = glm::translate(IDENTITY_M4, pinLocations[4]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel5, "Pin4");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin4");
+
+	matrix4 pinModel6 = glm::translate(IDENTITY_M4, pinLocations[5]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel6, "Pin5");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin5");
+
+	matrix4 pinModel7 = glm::translate(IDENTITY_M4, pinLocations[6]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel7, "Pin6");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin6");
+
+	matrix4 pinModel8 = glm::translate(IDENTITY_M4, pinLocations[7]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel8, "Pin7");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin7");
+
+	matrix4 pinModel9 = glm::translate(IDENTITY_M4, pinLocations[8]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel9, "Pin8");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin8");
+
+	matrix4 pinModel10 = glm::translate(IDENTITY_M4, pinLocations[9]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
+	m_pEntityMngr->SetModelMatrix(pinModel10, "Pin9");
+	m_pEntityMngr->UsePhysicsSolver(true, "Pin9");
 
 
 	//Load audio
@@ -152,7 +184,6 @@ void Application::Update(void)
 
 	}
 
-
 	//Is the first person camera active?
 	CameraRotation();
 
@@ -229,58 +260,15 @@ void Application::Display(void)
 
 	//Render the bowling ball, ball wireframe and the plane
 	//bowlingBall->Render(projection, view, model);
-	bowlingBallWire->Render(projection, view, model);
-	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
 	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
-	//Draw pins
-	//for (uint i = 0; i < 10; i++)
-	//{
-	//	matrix4 pinModel = glm::translate(IDENTITY_M4, pinLocations[i]) * glm::scale(vector3(0.75f,0.75f,0.75f));
-	//	pins[i].Render(projection, view, pinModel);
-	//}
+	bowlingBallWire->Render(projection, view, model);
+	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
 	//Render the pins
-	matrix4 pinModel1 = glm::translate(IDENTITY_M4, pinLocations[0]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel1, "Pin1");
-	m_pEntityMngr->UsePhysicsSolver();
+	/**/
 
-	matrix4 pinModel2 = glm::translate(IDENTITY_M4, pinLocations[1]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel2, "Pin2");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel3 = glm::translate(IDENTITY_M4, pinLocations[2]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel3, "Pin3");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel4 = glm::translate(IDENTITY_M4, pinLocations[3]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel4, "Pin4");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel5 = glm::translate(IDENTITY_M4, pinLocations[4]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel5, "Pin5");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel6 = glm::translate(IDENTITY_M4, pinLocations[5]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel6, "Pin6");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel7 = glm::translate(IDENTITY_M4, pinLocations[6]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel7, "Pin7");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel8 = glm::translate(IDENTITY_M4, pinLocations[7]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel8, "Pin8");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel9 = glm::translate(IDENTITY_M4, pinLocations[8]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel9, "Pin9");
-	m_pEntityMngr->UsePhysicsSolver();
-
-	matrix4 pinModel10 = glm::translate(IDENTITY_M4, pinLocations[9]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
-	m_pEntityMngr->SetModelMatrix(pinModel10, "Pin10");
-	m_pEntityMngr->UsePhysicsSolver();
 
 	//Add grid to the scene
 	//m_pMeshMngr->AddGridToRenderList();
