@@ -196,7 +196,7 @@ void Application::Update(void)
 	}
 
 	//Lock the camera on behind the ball
-	m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), position, AXIS_Y);
+	m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), vector3(position.x, position.y + 5.0f, position.z), AXIS_Y);
 
 	//Is the first person camera active?
 	CameraRotation();
