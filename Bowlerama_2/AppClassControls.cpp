@@ -405,6 +405,16 @@ void Application::ProcessKeyboard(void)
 	if (bMultiplier)
 		fMultiplier = 5.0f;
 
+	//Reset the ball to starting position
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		force = vector3();
+		currentOrientation = quaternion(AXIS_X);
+		position = vector3(0.0f, 0.75f, 40.0f);
+		model = glm::translate(IDENTITY_M4, position);
+		model = model * ToMatrix4(currentOrientation);
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		m_pCameraMngr->MoveForward(m_fMovementSpeed * fMultiplier);
 
@@ -456,10 +466,6 @@ void Application::ProcessKeyboard(void)
 		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-	{
-		
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
 		
 	}

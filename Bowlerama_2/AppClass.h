@@ -12,20 +12,25 @@ Date: 2017/05
 
 #include "MyRigidBody.h"
 #include "MyEntityManager.h"
+#include "MyCamera.h"
+#include "MyMesh.h"
+#include "MyMeshManager.h"
 
 namespace Simplex
 {
 
 	class Application
 	{
+		MyCamera* m_pCamera = nullptr;
 		MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
-		Mesh* bowlingBall;
-		Mesh* bowlingBallWire;
-		Mesh* plane;
-		Mesh* pins;
+		Mesh* bowlingBall = nullptr;
+		Mesh* bowlingBallWire = nullptr;
+		Mesh* plane = nullptr;
+		Mesh* pins = nullptr;
+		MyMeshManager* m_pMyMeshMngr = nullptr;;
 		vector3* pinLocations;
 		vector3 force = vector3();
-		vector3 position = vector3(0.0f, 0.75f, 0.0f);
+		vector3 position = vector3(0.0f, 0.75f, 40.0f);
 		quaternion currentOrientation = quaternion(AXIS_X);
 		matrix4 model = IDENTITY_M4;
 		float dampeningRate = 0.996f;

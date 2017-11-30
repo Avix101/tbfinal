@@ -12,17 +12,26 @@ void Application::InitVariables(void)
 	m_pCameraMngr->SetPositionTargetAndUp(vector3(0.0f, 3.0f, 13.0f), //Position
 		vector3(0.0f, 3.0f, 12.0f),	//Target
 		AXIS_Y);					//Up
-
-									//Set the position of the light
+									
+	//m_pCamera = new MyCamera();
+	//m_pCamera->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), position, AXIS_Y);
+	//
+	//m_pMyMeshMngr = MyMeshManager::GetInstance();
+	//m_pMyMeshMngr->SetCamera(m_pCamera);
+									
+	//Set the position of the light
 	m_pLightMngr->SetPosition(vector3(10.0f));
 
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
+	//plane = new Mesh();
+	//plane->GeneratePlane(30.0f, C_GRAY);
 
-
-	plane = new Mesh();
-	plane->GeneratePlane(30.0f, C_GRAY);
+	m_pEntityMngr->AddEntity("Bowlerama\\Plane.obj", "Plane");
+	m_pEntityMngr->SetAxisVisibility(true, "Plane"); //set visibility of the entity's axis
+	matrix4 planeModel = glm::scale(vector3(1.0f, 1.0f, 3.0f)) * glm::translate(IDENTITY_M4, vector3(0.0f, -1.0f, 4.0f));
+	m_pEntityMngr->SetModelMatrix(planeModel, "Plane");
 
 	pins = new Mesh[10];
 	pinLocations = new vector3[10];
@@ -51,6 +60,8 @@ void Application::InitVariables(void)
 	}
 	m_pEntityMngr->AddEntity("Bowlerama\\BowlingBall.obj", "Bowling");
 	m_pEntityMngr->SetAxisVisibility(true, "Bowling"); //set visibility of the entity's axis
+	model = glm::translate(IDENTITY_M4, position);
+	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
 	//bowlingBall = new Mesh();
 	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
@@ -184,6 +195,9 @@ void Application::Update(void)
 
 	}
 
+	//Lock the camera on behind the ball
+	m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), position, AXIS_Y);
+
 	//Is the first person camera active?
 	CameraRotation();
 
@@ -264,7 +278,9 @@ void Application::Display(void)
 	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
 	bowlingBallWire->Render(projection, view, glm::scale(model, vector3(1.2f)));
-	plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
+	//plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
+
+
 
 	//Render the pins
 	/**/
