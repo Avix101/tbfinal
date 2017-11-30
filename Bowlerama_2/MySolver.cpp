@@ -116,8 +116,8 @@ void MySolver::ResolveCollision(MySolver* a_pOther)
 	if (fMagThis > 0.015f || fMagOther > 0.015f)
 	{
 		//a_pOther->ApplyForce(GetVelocity());
-		ApplyForce(-m_v3Velocity*2.3f);
-		a_pOther->ApplyForce(m_v3Velocity*2.3f);
+		ApplyForce(m_v3Velocity*2.5f);
+		//a_pOther->ApplyForce(m_v3Velocity *3.0f);
 	}
 	else
 	{
