@@ -30,6 +30,8 @@ namespace Simplex
 		MyMeshManager* m_pMyMeshMngr = nullptr;;
 		vector3* pinLocations;
 		vector3 force = vector3();
+		vector3 pinForces[10];
+		float pinFallSpeed = 0.01f;
 		vector3 position = vector3(0.0f, 0.75f, 40.0f);
 		quaternion currentOrientation = quaternion(AXIS_X);
 		matrix4 model = IDENTITY_M4;

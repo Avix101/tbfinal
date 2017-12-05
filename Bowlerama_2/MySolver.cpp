@@ -6,7 +6,7 @@ void MySolver::Init(void)
 	m_v3Acceleration = ZERO_V3;
 	m_v3Position = ZERO_V3;
 	m_v3Velocity = ZERO_V3;
-	m_fMass = 1.0f;
+	m_fMass = 1.2f;
 }
 void MySolver::Swap(MySolver& other)
 {
@@ -116,7 +116,7 @@ void MySolver::ResolveCollision(MySolver* a_pOther)
 	if (fMagThis > 0.015f || fMagOther > 0.015f)
 	{
 		//a_pOther->ApplyForce(GetVelocity());
-		ApplyForce(m_v3Velocity*2.5f);
+		ApplyForce(m_v3Velocity*0.5f);
 		//a_pOther->ApplyForce(m_v3Velocity *3.0f);
 	}
 	else

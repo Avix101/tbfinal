@@ -48,8 +48,6 @@ void Application::InitVariables(void)
 		m_pEntityMngr->AddEntity("Bowlerama\\BowlingPin.obj", "Pin" + std::to_string(i));
 		m_pEntityMngr->SetAxisVisibility(true, "Pin" + std::to_string(i)); //set visibility of the entity's axis
 
-		
-
 		currentPin++;
 
 		if (currentPin == row + 1)
@@ -112,6 +110,10 @@ void Application::InitVariables(void)
 	m_pEntityMngr->SetModelMatrix(pinModel10, "Pin9");
 	m_pEntityMngr->UsePhysicsSolver(true, "Pin9");
 
+	for (uint i = 0; i < 10; i++)
+	{
+		pinForces[i] = vector3(0.0f);
+	}
 
 	//Load audio
 	sf::Music* bgMusic = new sf::Music();
@@ -193,6 +195,22 @@ void Application::Update(void)
 			pressed = false;
 		}
 
+	}
+
+	for (uint i = 0; i < 10; i++)
+	{
+		std::string pinName = "Pin" + std::to_string(i);
+		matrix4 modelMatrix = m_pEntityMngr->GetModelMatrix(pinName);
+
+		if (modelMatrix[3][0] < 5.5f && modelMatrix[3][0] > -4.75f
+			&& modelMatrix[3][2] < 0.0f && modelMatrix[3][2] > -17.5f) {
+
+		}
+		else {
+			pinForces[i].y -= pinFallSpeed;
+			modelMatrix = modelMatrix * glm::translate(pinForces[i]);
+			m_pEntityMngr->SetModelMatrix(modelMatrix, pinName);
+		}
 	}
 
 	//Lock the camera on behind the ball

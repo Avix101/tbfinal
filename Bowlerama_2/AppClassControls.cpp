@@ -413,6 +413,16 @@ void Application::ProcessKeyboard(void)
 		position = vector3(0.0f, 0.75f, 40.0f);
 		model = glm::translate(IDENTITY_M4, position);
 		model = model * ToMatrix4(currentOrientation);
+
+		for (uint i = 0; i < 10; i++)
+		{
+			pinForces[i] = vector3(0.0f);
+			matrix4 temp = m_pEntityMngr->GetModelMatrix("Pin" + std::to_string(i));
+			temp = IDENTITY_M4;
+			temp = glm::translate(temp, pinLocations[i]);
+			m_pEntityMngr->SetModelMatrix(temp, "Pin" + std::to_string(i));
+			m_pEntityMngr->SetPosition(pinLocations[i], "Pin" + std::to_string(i));
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
