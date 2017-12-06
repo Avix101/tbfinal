@@ -22,6 +22,7 @@ namespace Simplex
 
 	class Application
 	{
+		std::vector<std::string> pinList; //List of pin names
 		MyOctant* root = nullptr; //Root of the octant
 		uint octantLevels = 0; //Number of octant levels
 		MyCamera* m_pCamera = nullptr;
