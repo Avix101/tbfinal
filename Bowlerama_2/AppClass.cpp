@@ -27,6 +27,10 @@ void Application::InitVariables(void)
 
 	//plane = new Mesh();
 	//plane->GeneratePlane(30.0f, C_GRAY);
+	
+	//Make the Octant
+	octantLevels = 1;
+	root = new MyOctant(octantLevels, 5);
 
 	m_pEntityMngr->AddEntity("Bowlerama\\Plane.obj", "Plane");
 	m_pEntityMngr->SetAxisVisibility(true, "Plane"); //set visibility of the entity's axis
@@ -213,6 +217,16 @@ void Application::Update(void)
 		}
 	}
 
+	static uint nClock = m_pSystem->GenClock();
+	static bool bStarted = false;
+	if (m_pSystem->IsTimerDone(nClock) || !bStarted)
+	{
+		bStarted = true;
+		m_pSystem->StartTimerOnClock(0.5, nClock);
+		SafeDelete(root);
+		root = new MyOctant(octantLevels, 5);
+	}
+
 	//Lock the camera on behind the ball
 	m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), vector3(position.x, position.y + 5.0f, position.z), AXIS_Y);
 
@@ -307,6 +321,9 @@ void Application::Display(void)
 	//Add grid to the scene
 	//m_pMeshMngr->AddGridToRenderList();
 
+	//Display the tree
+	root->Display(C_YELLOW);
+
 	//Add skybox
 	m_pMeshMngr->AddSkyboxToRenderList("Skybox.png");
 
@@ -344,6 +361,7 @@ void Application::Release(void)
 	SafeDelete(plane);
 	delete[] pins;
 	delete[] pinLocations;
+	SafeDelete(root);
 
 	//release the entity manager
 	m_pEntityMngr->ReleaseInstance();
