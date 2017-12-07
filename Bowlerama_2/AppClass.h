@@ -15,12 +15,16 @@ Date: 2017/05
 #include "MyCamera.h"
 #include "MyMesh.h"
 #include "MyMeshManager.h"
+#include "MyOctant.h"
 
 namespace Simplex
 {
 
 	class Application
 	{
+		std::vector<std::string> pinList; //List of pin names
+		MyOctant* root = nullptr; //Root of the octant
+		uint octantLevels = 0; //Number of octant levels
 		MyCamera* m_pCamera = nullptr;
 		MyEntityManager* m_pEntityMngr = nullptr; //Entity Manager
 		Mesh* bowlingBall = nullptr;

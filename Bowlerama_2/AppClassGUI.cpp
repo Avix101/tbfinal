@@ -14,6 +14,9 @@ void Application::DrawGUI(void)
 	//m_pMeshMngr->Print("						");
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->PrintLine(std::to_string(m_pSystem->GetFPS()), C_RED);
+
+	m_pMeshMngr->Print("Points:");
+	m_pMeshMngr->PrintLine(std::to_string(pinList.size() - 10), C_RED);
 #pragma endregion
 
 	//Calculate the window size to know how to draw

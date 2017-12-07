@@ -27,6 +27,10 @@ void Application::InitVariables(void)
 
 	//plane = new Mesh();
 	//plane->GeneratePlane(30.0f, C_GRAY);
+	
+	//Make the Octant
+	octantLevels = 1;
+	root = new MyOctant(octantLevels, 5);
 
 	m_pEntityMngr->AddEntity("Bowlerama\\Plane.obj", "Plane");
 	m_pEntityMngr->SetAxisVisibility(true, "Plane"); //set visibility of the entity's axis
@@ -199,6 +203,13 @@ void Application::Update(void)
 	for (uint i = 0; i < 10; i++)
 	{
 		std::string pinName = "Pin" + std::to_string(i);
+
+		//If the list does not have the pin yet, add it
+		if (std::find(pinList.begin(), pinList.end(), pinName) == pinList.end())
+		{
+			pinList.push_back(pinName);
+		}
+
 		matrix4 modelMatrix = m_pEntityMngr->GetModelMatrix(pinName);
 
 		if (modelMatrix[3][0] < 5.5f && modelMatrix[3][0] > -4.75f
@@ -209,11 +220,25 @@ void Application::Update(void)
 			pinForces[i].y -= pinFallSpeed;
 			modelMatrix = modelMatrix * glm::translate(pinForces[i]);
 			m_pEntityMngr->SetModelMatrix(modelMatrix, pinName);
+			pinList[i].clear(); //Clear the pin from the list if it falls
 		}
 	}
 
+	static uint nClock = m_pSystem->GenClock();
+	static bool bStarted = false;
+	if (m_pSystem->IsTimerDone(nClock) || !bStarted)
+	{
+		bStarted = true;
+		m_pSystem->StartTimerOnClock(0.5, nClock);
+		SafeDelete(root);
+		root = new MyOctant(octantLevels, 5);
+	}
+
 	//Lock the camera on behind the ball
-	m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), vector3(position.x, position.y + 5.0f, position.z), AXIS_Y);
+	if (position.z > 25.0f)
+	{
+		m_pCameraMngr->SetPositionTargetAndUp(vector3(position.x, position.y + 5.0f, position.z + 15.0f), vector3(position.x, position.y + 5.0f, position.z), AXIS_Y);
+	}
 
 	//Is the first person camera active?
 	CameraRotation();
@@ -308,6 +333,9 @@ void Application::Display(void)
 	//Add grid to the scene
 	//m_pMeshMngr->AddGridToRenderList();
 
+	//Display the tree
+	root->Display(C_YELLOW);
+
 	//Add skybox
 	m_pMeshMngr->AddSkyboxToRenderList("Skybox.png");
 
@@ -345,6 +373,7 @@ void Application::Release(void)
 	SafeDelete(plane);
 	delete[] pins;
 	delete[] pinLocations;
+	SafeDelete(root);
 
 	//release the entity manager
 	m_pEntityMngr->ReleaseInstance();

@@ -423,6 +423,7 @@ void Application::ProcessKeyboard(void)
 			m_pEntityMngr->SetModelMatrix(temp, "Pin" + std::to_string(i));
 			m_pEntityMngr->SetPosition(pinLocations[i], "Pin" + std::to_string(i));
 		}
+		pinList.clear();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
