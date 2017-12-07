@@ -176,7 +176,7 @@ void Application::Update(void)
 	ArcBall();
 
 	//check for mouse press and get position to calculate force
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && userControl)
 	{
 		pressed = true;
 		GetCursorPos(&pt);
@@ -184,7 +184,7 @@ void Application::Update(void)
 		startMouseY = pt.y;
 		force *= 0.8;
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false && userControl)
 	{
 		if (pressed == true)
 		{
@@ -197,6 +197,7 @@ void Application::Update(void)
 			force -= pushforce / 2.0f;
 
 			pressed = false;
+			userControl = false;
 		}
 
 	}

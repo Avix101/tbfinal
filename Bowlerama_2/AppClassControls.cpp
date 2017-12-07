@@ -133,6 +133,52 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			}
 		}
 		break;
+	case sf::Keyboard::B:
+		ballCount++;
+
+		force = vector3();
+		currentOrientation = quaternion(AXIS_X);
+		position = vector3(0.0f, 0.75f, 40.0f);
+		model = glm::translate(IDENTITY_M4, position);
+		model = model * ToMatrix4(currentOrientation);
+
+		if (frame < totalFrames)
+		{
+			if (ballCount == 1 && pinList.size() == 0)
+			{
+				frame++;
+				score += 20;
+				ballCount = 0;
+				for (uint i = 0; i < 10; i++)
+				{
+					pinForces[i] = vector3(0.0f);
+					matrix4 temp = m_pEntityMngr->GetModelMatrix("Pin" + std::to_string(i));
+					temp = IDENTITY_M4;
+					temp = glm::translate(temp, pinLocations[i]);
+					m_pEntityMngr->SetModelMatrix(temp, "Pin" + std::to_string(i));
+					m_pEntityMngr->SetPosition(pinLocations[i], "Pin" + std::to_string(i));
+				}
+				pinList.clear();
+			}
+			else if (ballCount >= 2)
+			{
+				frame++;
+				score += pinList.size() - 10;
+				ballCount = 0;
+				for (uint i = 0; i < 10; i++)
+				{
+					pinForces[i] = vector3(0.0f);
+					matrix4 temp = m_pEntityMngr->GetModelMatrix("Pin" + std::to_string(i));
+					temp = IDENTITY_M4;
+					temp = glm::translate(temp, pinLocations[i]);
+					m_pEntityMngr->SetModelMatrix(temp, "Pin" + std::to_string(i));
+					m_pEntityMngr->SetPosition(pinLocations[i], "Pin" + std::to_string(i));
+				}
+				pinList.clear();
+			}
+			userControl = true;
+		}
+		break;
 	case sf::Keyboard::LShift:
 	case sf::Keyboard::RShift:
 		m_bModifier = false;
@@ -408,7 +454,11 @@ void Application::ProcessKeyboard(void)
 	//Reset the ball to starting position
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
+		ballCount = 0;
+		frame = 1;
+		score = 0;
 		force = vector3();
+		userControl = true;
 		currentOrientation = quaternion(AXIS_X);
 		position = vector3(0.0f, 0.75f, 40.0f);
 		model = glm::translate(IDENTITY_M4, position);

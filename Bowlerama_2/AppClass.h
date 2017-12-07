@@ -47,6 +47,13 @@ namespace Simplex
 		POINT pt;
 		bool pressed = false;
 
+		//Bowling game variables
+		bool userControl = true;
+		uint score = 0;
+		uint ballCount = 0;
+		uint frame = 1;
+		uint totalFrames = 10;
+
 		//Music & Sounds
 		uint globalMusicVolume = 60;
 		uint globalSoundVolume = 75;

@@ -16,7 +16,9 @@ void Application::DrawGUI(void)
 	m_pMeshMngr->PrintLine(std::to_string(m_pSystem->GetFPS()), C_RED);
 
 	m_pMeshMngr->Print("Points:");
-	m_pMeshMngr->PrintLine(std::to_string(pinList.size() - 10), C_RED);
+	m_pMeshMngr->PrintLine((std::to_string(pinList.size() - 10 + score)), C_RED);
+	m_pMeshMngr->Print("Frame:");
+	m_pMeshMngr->PrintLine((std::to_string(frame) + "/" + std::to_string(totalFrames)), C_RED);
 #pragma endregion
 
 	//Calculate the window size to know how to draw
@@ -42,11 +44,16 @@ void Application::DrawGUI(void)
 			ImGui::Text("	 F3: Orthographic Y\n");
 			ImGui::Text("	 F4: Orthographic Z\n");
 			ImGui::Separator();
+			ImGui::Text("Debug Controls:\n");
 			ImGui::Text("  Left: Roll Bowling Ball Left\n");
 			ImGui::Text(" Right: Roll Bowling Ball Right\n");
 			ImGui::Text("    Up: Roll Bowling Ball Forward\n");
 			ImGui::Text("  Down: Roll Bowling Ball Back\n");
 			ImGui::Separator();
+			ImGui::Text("Controls:\n");
+			ImGui::Text("    Throw Ball: Click & Drag Mouse\n");
+			ImGui::Text("    Play Next Ball: B\n");
+			ImGui::Text("    Reset: R\n");
 			ImGui::TextColored(ImColor(255, 255, 0), "Bowlerama!");
 		}
 		ImGui::End();
