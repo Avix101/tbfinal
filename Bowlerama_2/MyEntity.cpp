@@ -60,6 +60,10 @@ void Simplex::MyEntity::Init(void)
 	m_bUsePhysicsSolver = false;
 	m_pSolver = nullptr;
 }
+void Simplex::MyEntity::SetRotation(quaternion forceR)
+{
+	rotateF = forceR;
+}
 void Simplex::MyEntity::Swap(MyEntity& other)
 {
 	m_bInMemory = false;
@@ -296,7 +300,7 @@ void Simplex::MyEntity::Update(void)
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->Update();
-		SetModelMatrix(glm::translate(m_pSolver->GetPosition()));
+		SetModelMatrix(glm::translate(m_pSolver->GetPosition()) *  ToMatrix4(rotateF));
 	}
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)

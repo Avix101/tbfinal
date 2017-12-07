@@ -61,14 +61,13 @@ void Application::InitVariables(void)
 	model = glm::translate(IDENTITY_M4, position);
 	m_pEntityMngr->SetModelMatrix(model, "Bowling");
 
-	//bowlingBall = new Mesh();
-	//bowlingBall->GenerateSphere(1.75f, 4, C_BLACK);
-
 	bowlingBallWire = new Mesh();
 	bowlingBallWire->GenerateWireSphere(0.9f, C_GREEN);
 	
 	m_pEntityMngr->UsePhysicsSolver(true, "Bowling");
 	m_pEntityMngr->SetMass(5.0f, "Bowling");
+	MyEntity* pEntity = m_pEntityMngr->GetEntity(12);
+	pEntity->SetRotation(currentOrientation);
 
 	matrix4 pinModel1 = glm::translate(IDENTITY_M4, pinLocations[0]) * glm::scale(vector3(0.75f, 0.75f, 0.75f));
 	m_pEntityMngr->SetModelMatrix(pinModel1, "Pin0");
@@ -294,8 +293,10 @@ void Application::Display(void)
 	//bowlingBall->Render(projection, view, model);
 
 	m_pEntityMngr->SetModelMatrix(model, "Bowling");
+	MyEntity* pEntity = m_pEntityMngr->GetEntity(12);
+	pEntity->SetRotation(currentOrientation);
 
-	bowlingBallWire->Render(projection, view, glm::scale(model, vector3(1.2f)));
+	//bowlingBallWire->Render(projection, view, glm::scale(model, vector3(1.2f)));
 	//plane->Render(projection, view, glm::translate(glm::rotate(IDENTITY_M4, -90.0f, AXIS_X), vector3(0.0f, 0.0f, -0.5f)) * glm::scale(vector3(0.35f, 1.0f, 1.0f)));
 
 
