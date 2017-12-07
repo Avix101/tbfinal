@@ -31,6 +31,7 @@ namespace Simplex
 		bool m_bUsePhysicsSolver = false; //Indicates if we will use a physics solver 
 
 		MySolver* m_pSolver = nullptr; //Physics MySolver
+		quaternion rotateF;
 
 	public:
 		/*
@@ -267,6 +268,7 @@ namespace Simplex
 		OUTPUT: ---
 		*/
 		void UsePhysicsSolver(bool a_bUse = true);
+		void SetRotation(quaternion forceR);
 
 	private:
 		/*
@@ -281,6 +283,7 @@ namespace Simplex
 		Output: ---
 		*/
 		void Init(void);
+
 	};//class
 
 } //namespace Simplex
